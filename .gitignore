@@ -6,3 +6,6 @@ work/
 .env.*
 !.env.example
 .netlify/
+
+playwright-report/
+test-results/

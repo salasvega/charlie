@@ -107,7 +107,10 @@ function SessionFlow({
                       required
                       value={item.id}
                       checked={subjectId === item.id}
-                      onChange={() => setSubjectId(item.id)}
+                      onChange={() => {
+                        setSubjectId(item.id);
+                        setHint(false);
+                      }}
                     />
                     <span className={`subject-symbol ${item.tone}`}>
                       {item.symbol}
@@ -266,7 +269,8 @@ function SessionFlow({
       </section>
       <p className="session-footnote">
         Démonstration sans IA ni sauvegarde. Quitter cette rubrique ou recharger
-        la page réinitialise le parcours.
+        la page réinitialise le parcours. Une matière indiquée dans le lien
+        reste présélectionnée.
       </p>
     </div>
   );

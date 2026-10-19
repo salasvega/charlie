@@ -1,0 +1,45 @@
+// Activité entièrement fictive, indépendante des interactions de démonstration.
+export const demoWeek = [
+  { day: "Lundi", short: "Lun", minutes: 20 },
+  { day: "Mardi", short: "Mar", minutes: 35 },
+  { day: "Mercredi", short: "Mer", minutes: 30 },
+  { day: "Jeudi", short: "Jeu", minutes: 25 },
+  { day: "Vendredi", short: "Ven", minutes: 45 },
+  { day: "Samedi", short: "Sam", minutes: 0 },
+  { day: "Dimanche", short: "Dim", minutes: 0 },
+] as const;
+export const demoChallenges = [
+  {
+    id: "curiosity",
+    title: "La curiosité, ça se cultive.",
+    description: "Explorer trois matières différentes.",
+    current: 2,
+    total: 3,
+    unit: "matières",
+    tone: "purple",
+    target: "/mes-matieres",
+    action: "Explorer les matières",
+  },
+  {
+    id: "momentum",
+    title: "Un petit pas chaque jour.",
+    description: "Découvrir cinq séances à son rythme.",
+    current: 5,
+    total: 5,
+    unit: "séances",
+    tone: "teal",
+    target: "/ma-seance",
+    action: "Découvrir une séance",
+  },
+  {
+    id: "creative",
+    title: "Une touche de créativité.",
+    description: "Imaginer un compagnon dans le Studio Avatar.",
+    current: 0,
+    total: 1,
+    unit: "avatar",
+    tone: "orange",
+    target: "/studio-avatar",
+    action: "Ouvrir le studio",
+  },
+] as const;
