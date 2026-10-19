@@ -73,3 +73,9 @@ npm run test:e2e
 ```
 
 `npm run check` exécute typage, build et tests (après installation du navigateur). Le workflow GitHub exécute les mêmes contrôles. Voir `docs/RELEASE_DEMO.md` pour le périmètre, le déploiement et le retour arrière.
+
+## Réalignement UX/UI — Accueil en validation
+
+La branche `feat/ux-realignment-home` applique la maquette officielle à l’Accueil uniquement. Le thème est isolé dans `src/styles/home-reference.css`, les données fictives de référence dans `src/data/homeReference.ts`, et la navigation de l’Accueil dans `src/layouts/HomeLayout.tsx`. La police Nunito Sans est embarquée localement via Fontsource ; aucun service de police externe n’est appelé.
+
+Comparaison, plan des écrans, captures réelles et écarts restants : `docs/ux/REALIGNEMENT.md`. Les illustrations sont des reconstitutions de la référence et restent à remplacer par les exports originaux pour une correspondance exacte. La correction des autres écrans et toute fusion attendent la validation de l’Accueil.
