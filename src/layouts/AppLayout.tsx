@@ -10,7 +10,9 @@ export function AppLayout() {
   useEffect(() => {
     setOpen(false);
     document.title = `${navigation.find((n) => n.path === pathname)?.label ?? "Page introuvable"} · Charlie 2.0`;
-    main.current?.focus();
+    if (!main.current?.contains(document.activeElement)) {
+      main.current?.focus();
+    }
   }, [pathname]);
   return (
     <div className="app-shell">
