@@ -80,7 +80,7 @@ test("catalogue : recherche, état vide, présélection et redémarrage", async 
   await page.getByRole("button", { name: "Voir le bilan démo" }).click();
   await page.getByRole("button", { name: "Nouvelle séance" }).click();
   await expect(page.locator("input:checked")).toHaveCount(0);
-  await expect(page).toHaveURL("/ma-seance");
+  await expect(page).toHaveURL("/ma-seance?preparer=1");
 });
 
 test("paramètre invalide et indice réinitialisé après changement de matière", async ({
@@ -132,28 +132,52 @@ test("avatar : aperçu, options, aléatoire, reset et rechargement", async ({
   page,
 }) => {
   await page.goto("/studio-avatar");
-  await page.getByRole("radio", { name: "Turquoise", exact: true }).check();
-  await page.getByRole("radio", { name: "Clin d’œil", exact: true }).check();
-  await page.getByRole("radio", { name: "Étoile", exact: true }).check();
+  await page.getByRole("radio", { name: "Robot", exact: true }).check();
+  await expect(page.getByRole("img", { name: /Charlie Robot/ })).toBeVisible();
+  await page.getByRole("radio", { name: "Humain", exact: true }).check();
+  await page
+    .getByRole("radio", {
+      name: "Visage : Cheveux blonds et hoodie gris",
+      exact: true,
+    })
+    .check();
+  await page
+    .getByRole("radio", {
+      name: "Arrière-plan : Lac et montagnes",
+      exact: true,
+    })
+    .check();
   await expect(
-    page.getByRole("img", { name: /Compagnon Turquoise, Clin d’œil, Étoile/ }),
+    page.getByRole("img", {
+      name: /Charlie Humain, Cheveux blonds et hoodie gris, Lac et montagnes/,
+    }),
   ).toBeVisible();
+  await page.getByRole("button", { name: "Voir plus d’avatars" }).click();
   await page.getByRole("button", { name: "Surprends-moi" }).click();
-  await expect(page.locator("input:checked")).toHaveCount(3);
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await page.getByRole("button", { name: "Voir plus d’avatars" }).click();
   await page.getByRole("button", { name: "Réinitialiser l’avatar" }).click();
   await expect(
-    page.getByRole("radio", { name: "Bleu électrique" }),
+    page.getByRole("radio", { name: "Humain", exact: true }),
   ).toBeChecked();
   await expect(
-    page.getByRole("radio", { name: "Sourire", exact: true }),
+    page.getByRole("radio", {
+      name: "Visage : Chignon brun et hoodie violet",
+      exact: true,
+    }),
   ).toBeChecked();
-  await expect(
-    page.getByRole("radio", { name: "Petite feuille" }),
-  ).toBeChecked();
-  await page.getByRole("radio", { name: "Violet", exact: true }).check();
+  await page
+    .getByRole("radio", {
+      name: "Visage : Lunettes et chemise violette",
+      exact: true,
+    })
+    .check();
   await page.reload();
   await expect(
-    page.getByRole("radio", { name: "Bleu électrique" }),
+    page.getByRole("radio", {
+      name: "Visage : Chignon brun et hoodie violet",
+      exact: true,
+    }),
   ).toBeChecked();
 });
 

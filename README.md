@@ -79,3 +79,17 @@ npm run test:e2e
 La branche `feat/ux-realignment-home` applique la maquette officielle à l’Accueil uniquement. Le thème est isolé dans `src/styles/home-reference.css`, les données fictives de référence dans `src/data/homeReference.ts`, et la navigation de l’Accueil dans `src/layouts/HomeLayout.tsx`. La police Nunito Sans est embarquée localement via Fontsource ; aucun service de police externe n’est appelé.
 
 Comparaison, plan des écrans, captures réelles et écarts restants : `docs/ux/REALIGNEMENT.md`. Les illustrations sont des reconstitutions de la référence et restent à remplacer par les exports originaux pour une correspondance exacte. La correction des autres écrans et toute fusion attendent la validation de l’Accueil.
+
+## Réalignement UX/UI — Ma séance V2 en validation
+
+Après validation de l’Accueil, la branche `feat/ux-realignment-session-v2` reprend la maquette officielle V2. La route `/ma-seance` ouvre la conversation scénarisée de fonctions. Les liens contenant `matiere` conservent la préparation avec présélection ; le bouton « + » permet aussi de préparer une séance. Le bilan et les anciens exemples restent accessibles.
+
+Composition, comportement, limites et captures réelles : `docs/ux/MA_SEANCE_V2.md`. Styles isolés dans `src/styles/session-reference.css`, contenus préparés dans `src/data/sessionV2.ts`, outils dans `src/components/session`. La calculatrice effectue les quatre opérations localement ; le brouillon conserve temporairement des notes textuelles dans trois onglets. La police manuscrite Caveat est embarquée localement via Fontsource. Aucun envoi, correction IA, caméra, microphone ou sauvegarde. La PR reste en brouillon, sans fusion ni mise à jour de la branche de production.
+
+## Réalignement UX/UI — Studio Avatar en validation
+
+La branche `feat/ux-realignment-avatar-studio` reprend la maquette officielle du Studio après validation de l’Accueil et de Ma séance V2. Le thème est isolé dans `src/styles/avatar-reference.css`, les données et la validation des paramètres dans `src/data/avatarStudio.ts`, les composants dans `src/components/avatar`.
+
+Trois styles illustrés, apparences humaines préparées liées, cinq décors, réglages de voix/personnalité et test local. L’enregistrement n’a lieu qu’au clic sur « Enregistrer mon avatar » et conserve uniquement une configuration non personnelle dans le stockage de cet appareil. La galerie permet de l’effacer. Les messages ne sont ni envoyés ni sauvegardés. La préécoute nécessite une voix locale compatible du navigateur ; aucun service vocal externe n’est utilisé.
+
+Comparaison, captures et limites : `docs/ux/STUDIO_AVATAR.md`. Les composants de l’ancien compagnon géométrique ne sont pas supprimés. Aucune connexion Supabase/IA, aucune fusion ni mise à jour de la branche de production pendant cette validation.

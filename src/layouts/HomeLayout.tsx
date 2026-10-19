@@ -29,18 +29,24 @@ export function HomeLayout({
   children,
   focus,
   onToggleFocus,
+  pageTitle = "Accueil",
+  variant = "home",
 }: {
   children: ReactNode;
+  pageTitle?: string;
+  variant?: "home" | "session" | "avatar";
   focus: boolean;
   onToggleFocus: () => void;
 }) {
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    document.title = "Accueil · Charlie 2.0";
+    document.title = `${pageTitle} · Charlie 2.0`;
     document.getElementById("home-main")?.focus({ preventScroll: true });
-  }, []);
+  }, [pageTitle]);
   return (
-    <div className={`reference-home${focus ? " is-focus" : ""}`}>
+    <div
+      className={`reference-home${variant === "session" ? " reference-session" : variant === "avatar" ? " reference-avatar" : ""}${focus ? " is-focus" : ""}`}
+    >
       <a className="skip-link" href="#home-main">
         Aller au contenu
       </a>
@@ -87,13 +93,29 @@ export function HomeLayout({
         <div className="ref-sidebar-landscape">
           <Sparkles size={22} aria-hidden="true" />
           <strong>
-            Des questions
-            <br />
-            d’aujourd’hui
-            <br />
-            aux réussites
-            <br />
-            de demain !
+            {variant !== "home" ? (
+              <>
+                Les grandes
+                <br />
+                réussites sont
+                <br />
+                la somme de
+                <br />
+                petits efforts
+                <br />
+                répétés chaque jour !
+              </>
+            ) : (
+              <>
+                Des questions
+                <br />
+                d’aujourd’hui
+                <br />
+                aux réussites
+                <br />
+                de demain !
+              </>
+            )}
           </strong>
         </div>
       </aside>
