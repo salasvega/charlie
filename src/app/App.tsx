@@ -1,8 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import { AppLayout } from "../layouts/AppLayout";
 import { HomePage } from "../pages/HomePage";
-import { PlaceholderPage, NotFoundPage } from "../pages/PlaceholderPage";
-import { navigation } from "../data/navigation";
+import { NotFoundPage } from "../pages/PlaceholderPage";
+import { ProgressPage } from "../pages/ProgressPage";
+import { ChallengesPage } from "../pages/ChallengesPage";
+import { AvatarPage } from "../pages/AvatarPage";
 import { SessionPage } from "../pages/SessionPage";
 import { SubjectsPage } from "../pages/SubjectsPage";
 export function App() {
@@ -12,13 +14,9 @@ export function App() {
         <Route index element={<HomePage />} />
         <Route path="/ma-seance" element={<SessionPage />} />
         <Route path="/mes-matieres" element={<SubjectsPage />} />
-        {navigation.slice(3).map((section) => (
-          <Route
-            key={section.path}
-            path={section.path}
-            element={<PlaceholderPage section={section} />}
-          />
-        ))}
+        <Route path="/mes-progres" element={<ProgressPage />} />
+        <Route path="/mes-defis" element={<ChallengesPage />} />
+        <Route path="/studio-avatar" element={<AvatarPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

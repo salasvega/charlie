@@ -1,6 +1,6 @@
 # Charlie 2.0
 
-Fondations d’une application éducative pour collégiens et lycéens. Cette version est une démonstration locale, avec des données entièrement fictives et sans authentification, persistance, Supabase ni API OpenAI.
+Fondations d’une application éducative pour collégiens et lycéens. Cette version est une démonstration, avec des données entièrement fictives et sans authentification, persistance, Supabase ni API OpenAI.
 
 ## Lancement
 
@@ -40,11 +40,11 @@ Le design system expose couleurs, typographie, ombres, espacements et rayons via
 
 ## Navigation
 
-`/`, `/ma-seance`, `/mes-matieres`, `/mes-progres`, `/mes-defis`, `/studio-avatar`. Les trois dernières pages annoncent clairement les futures fonctionnalités. `/mes-matieres` propose un catalogue filtrable de démonstration. `/ma-seance` propose le parcours de démonstration décrit dans `docs/MISSION_02.md`. Les liens du tableau de bord mènent à ces pages ; ils ne démarrent pas de séance avec IA. Les chemins inconnus affichent une page 404 applicative.
+`/`, `/ma-seance`, `/mes-matieres`, `/mes-progres`, `/mes-defis`, `/studio-avatar`. Les six rubriques proposent désormais une interface de démonstration. Les progrès et défis sont fictifs ; le Studio Avatar propose un aperçu personnalisable sans sauvegarde. `/mes-matieres` propose un catalogue filtrable de démonstration. `/ma-seance` propose le parcours de démonstration décrit dans `docs/MISSION_02.md`. Les liens du tableau de bord mènent à ces pages ; ils ne démarrent pas de séance avec IA. Les chemins inconnus affichent une page 404 applicative.
 
 ## Netlify
 
-Connecter le dépôt et choisir la branche à déployer, idéalement la PR pour une Deploy Preview. `netlify.toml` configure Node 22, `npm run build`, le dossier `dist` et une réécriture SPA `/* → /index.html` (200), nécessaire pour recharger directement une route React. Aucune variable d’environnement ni clé n’est nécessaire. Aucun déploiement n’est effectué dans cette mission.
+Connecter le dépôt et choisir la branche à déployer, idéalement la PR pour une Deploy Preview. `netlify.toml` configure Node 22, `npm run build`, le dossier `dist` et une réécriture SPA `/* → /index.html` (200), nécessaire pour recharger directement une route React. Aucune variable d’environnement ni clé n’est nécessaire. Le site de démonstration est hébergé sur https://moncharlie.netlify.app/. La procédure de publication et les limites de validation sont décrites dans `docs/RELEASE_DEMO.md`.
 
 ## Évolutions
 
@@ -59,3 +59,17 @@ Conventions : voir `AGENTS.md`. Proposition de PR : `docs/PULL_REQUEST.md`.
 ## Mission 03
 
 Catalogue : `src/pages/SubjectsPage.tsx` et `src/data/subjects.ts`. Recherche et filtre combinables, notions disponibles ou à venir, accès à la séance avec matière présélectionnée via `?matiere=maths|francais|sciences`. Aucune progression sauvegardée. Détails : `docs/MISSION_03.md`.
+
+## Démonstrateur complet et tests
+
+Les pages `ProgressPage.tsx`, `ChallengesPage.tsx` et `AvatarPage.tsx` complètent les six rubriques. Les données fictives partagées sont dans `src/data/activity.ts` et `src/data/avatar.ts` ; les composants partagés incluent `PageHeading` et `AvatarPreview`.
+
+Les tests de parcours utilisent Playwright (dépendance de développement, sans effet sur le bundle livré) :
+
+```sh
+npm run build
+npx playwright install chromium
+npm run test:e2e
+```
+
+`npm run check` exécute typage, build et tests (après installation du navigateur). Le workflow GitHub exécute les mêmes contrôles. Voir `docs/RELEASE_DEMO.md` pour le périmètre, le déploiement et le retour arrière.
