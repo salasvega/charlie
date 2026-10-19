@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowRight,
@@ -12,8 +12,27 @@ import { sessionSubjects, sessionGoals } from "../data/session";
 type Stage = "subject" | "goal" | "session" | "summary";
 const stages: Stage[] = ["subject", "goal", "session", "summary"];
 export function SessionPage() {
+  const [params, setParams] = useSearchParams();
+  const requested = params.get("matiere");
+  const initialSubjectId =
+    sessionSubjects.find((item) => item.id === requested)?.id ?? "";
+  return (
+    <SessionFlow
+      key={params.toString()}
+      initialSubjectId={initialSubjectId}
+      onClearSelection={() => setParams({}, { replace: true })}
+    />
+  );
+}
+function SessionFlow({
+  initialSubjectId,
+  onClearSelection,
+}: {
+  initialSubjectId: string;
+  onClearSelection: () => void;
+}) {
   const [stage, setStage] = useState<Stage>("subject");
-  const [subjectId, setSubjectId] = useState("");
+  const [subjectId, setSubjectId] = useState(initialSubjectId);
   const [goal, setGoal] = useState("");
   const [hint, setHint] = useState(false);
   const title = useRef<HTMLHeadingElement>(null);
@@ -22,6 +41,7 @@ export function SessionPage() {
     title.current?.focus();
   }, [stage]);
   function restart() {
+    onClearSelection();
     setSubjectId("");
     setGoal("");
     setHint(false);

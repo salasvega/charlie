@@ -40,7 +40,7 @@ Le design system expose couleurs, typographie, ombres, espacements et rayons via
 
 ## Navigation
 
-`/`, `/ma-seance`, `/mes-matieres`, `/mes-progres`, `/mes-defis`, `/studio-avatar`. Les quatre dernières pages annoncent clairement les futures fonctionnalités. `/ma-seance` propose le parcours de démonstration décrit dans `docs/MISSION_02.md`. Les liens du tableau de bord mènent à ces pages ; ils ne démarrent pas de séance avec IA. Les chemins inconnus affichent une page 404 applicative.
+`/`, `/ma-seance`, `/mes-matieres`, `/mes-progres`, `/mes-defis`, `/studio-avatar`. Les trois dernières pages annoncent clairement les futures fonctionnalités. `/mes-matieres` propose un catalogue filtrable de démonstration. `/ma-seance` propose le parcours de démonstration décrit dans `docs/MISSION_02.md`. Les liens du tableau de bord mènent à ces pages ; ils ne démarrent pas de séance avec IA. Les chemins inconnus affichent une page 404 applicative.
 
 ## Netlify
 
@@ -55,3 +55,7 @@ Conventions : voir `AGENTS.md`. Proposition de PR : `docs/PULL_REQUEST.md`.
 ## Mission 02
 
 `src/pages/SessionPage.tsx` remplace la page provisoire de séance. Les exemples préparés sont dans `src/data/session.ts`. Choix matière → objectif → exemple avec indice → bilan fictif, sans sauvegarde ni évaluation. Voir `docs/MISSION_02.md` pour le périmètre et les critères d’acceptation.
+
+## Mission 03
+
+Catalogue : `src/pages/SubjectsPage.tsx` et `src/data/subjects.ts`. Recherche et filtre combinables, notions disponibles ou à venir, accès à la séance avec matière présélectionnée via `?matiere=maths|francais|sciences`. Aucune progression sauvegardée. Détails : `docs/MISSION_03.md`.
