@@ -11,8 +11,8 @@ export function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/ma-seance" element={<SessionPage />} />
       <Route element={<AppLayout />}>
-        <Route path="/ma-seance" element={<SessionPage />} />
         <Route path="/mes-matieres" element={<SubjectsPage />} />
         <Route path="/mes-progres" element={<ProgressPage />} />
         <Route path="/mes-defis" element={<ChallengesPage />} />

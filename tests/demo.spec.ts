@@ -80,7 +80,7 @@ test("catalogue : recherche, état vide, présélection et redémarrage", async 
   await page.getByRole("button", { name: "Voir le bilan démo" }).click();
   await page.getByRole("button", { name: "Nouvelle séance" }).click();
   await expect(page.locator("input:checked")).toHaveCount(0);
-  await expect(page).toHaveURL("/ma-seance");
+  await expect(page).toHaveURL("/ma-seance?preparer=1");
 });
 
 test("paramètre invalide et indice réinitialisé après changement de matière", async ({
