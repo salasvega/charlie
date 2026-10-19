@@ -10,8 +10,8 @@ import { SubjectsPage } from "../pages/SubjectsPage";
 export function App() {
   return (
     <Routes>
+      <Route path="/" element={<HomePage />} />
       <Route element={<AppLayout />}>
-        <Route index element={<HomePage />} />
         <Route path="/ma-seance" element={<SessionPage />} />
         <Route path="/mes-matieres" element={<SubjectsPage />} />
         <Route path="/mes-progres" element={<ProgressPage />} />

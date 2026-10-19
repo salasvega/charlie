@@ -1,176 +1,522 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
-  ArrowUpRight,
-  Clock3,
-  Sparkles,
-  Flame,
-  Target,
-  Trophy,
   ChevronRight,
+  ChevronDown,
+  Search,
+  Bell,
+  X,
+  Sparkles,
+  CalendarDays,
+  Trophy,
+  Target,
+  Flame,
+  Star,
+  Moon,
+  Paperclip,
+  Mic,
+  Brain,
+  Leaf,
+  UserRound,
+  Check,
   BookOpen,
-  Zap,
 } from "lucide-react";
-import { demoStats, demoSubjects } from "../data/demo";
+import { HomeLayout } from "../layouts/HomeLayout";
+import { HomeSymbol } from "../components/HomeSymbol";
+import {
+  referenceSubjects,
+  referencePriorities,
+  referenceChallenges,
+} from "../data/homeReference";
+import "../styles/home-reference.css";
 export function HomePage() {
+  const [focus, setFocus] = useState(false);
+  const [panel, setPanel] = useState<
+    "search" | "notifications" | "profile" | null
+  >(null);
+  const [query, setQuery] = useState("");
+  const [message, setMessage] = useState("");
+  const [notice, setNotice] = useState("");
+  const [completed, setCompleted] = useState<string[]>([]);
+  const normalize = (value: string) =>
+    value
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  const subjects = referenceSubjects.filter((item) =>
+    normalize(item.name).includes(normalize(query)),
+  );
+  function togglePanel(value: typeof panel) {
+    setPanel(panel === value ? null : value);
+  }
   return (
-    <>
-      <div className="page-heading">
-        <div>
-          <p className="eyebrow">UN NOUVEAU JOUR POUR APPRENDRE</p>
-          <h1>
-            Prêt à faire des étincelles ? <span className="hello">✦</span>
+    <HomeLayout focus={focus} onToggleFocus={() => setFocus(!focus)}>
+      <section className="ref-hero" aria-labelledby="home-title">
+        <div className="ref-hero-shade" />
+        <div className="ref-top-actions">
+          <span className="ref-demo-badge">Profil fictif · Démo</span>
+          <div className="ref-action-cluster">
+            <button
+              aria-label="Rechercher une matière"
+              aria-expanded={panel === "search"}
+              aria-controls="home-action-panel"
+              onClick={() => togglePanel("search")}
+            >
+              <Search size={25} />
+            </button>
+            <button
+              aria-label="Voir les notifications de démonstration"
+              aria-expanded={panel === "notifications"}
+              aria-controls="home-action-panel"
+              onClick={() => togglePanel("notifications")}
+            >
+              <Bell size={25} />
+              <span className="ref-notification-count">3</span>
+            </button>
+          </div>
+          <button
+            className="ref-profile"
+            aria-expanded={panel === "profile"}
+            aria-controls="home-action-panel"
+            onClick={() => togglePanel("profile")}
+          >
+            <span>N</span>
+            <span>
+              <strong>Nina</strong>
+              <small>Seconde</small>
+            </span>
+            <ChevronDown size={17} />
+          </button>
+        </div>
+        {panel && (
+          <section
+            className="ref-action-panel"
+            id="home-action-panel"
+            aria-label={
+              panel === "search"
+                ? "Recherche"
+                : panel === "profile"
+                  ? "Profil de démonstration"
+                  : "Notifications de démonstration"
+            }
+          >
+            <button
+              className="ref-panel-close"
+              aria-label="Fermer le panneau"
+              onClick={() => setPanel(null)}
+            >
+              <X size={18} />
+            </button>
+            {panel === "search" ? (
+              <>
+                <label htmlFor="home-search">
+                  Rechercher dans les matières
+                </label>
+                <input
+                  id="home-search"
+                  autoFocus
+                  type="search"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Mathématiques, français…"
+                />
+                <p role="status">
+                  {subjects.length} matière(s) affichée(s) dans le tableau de
+                  bord.
+                </p>
+              </>
+            ) : panel === "profile" ? (
+              <>
+                <strong>Nina · Seconde</strong>
+                <p>
+                  Profil fictif repris de la maquette. Aucun compte personnel
+                  n’est connecté.
+                </p>
+              </>
+            ) : (
+              <>
+                <strong>Les nouvelles de Charlie</strong>
+                <ul>
+                  <li>Ton programme de démonstration est prêt.</li>
+                  <li>Trois défis fictifs à découvrir.</li>
+                  <li>Le Studio Avatar t’attend.</li>
+                </ul>
+              </>
+            )}
+          </section>
+        )}
+        <div className="ref-greeting">
+          <Sparkles
+            className="ref-greeting-mark"
+            aria-hidden="true"
+            size={28}
+          />
+          <h1 id="home-title">
+            Bonjour Nina ! <span aria-hidden="true">👋</span>
           </h1>
           <p>
-            À ton rythme, avec confiance. Charlie est là pour t’accompagner.
+            "Chaque effort compte et te rapproche
+            <br className="ref-desktop-break" /> de tes objectifs !"
           </p>
-        </div>
-        <span className="school-badge">
-          <BookOpen size={16} />
-          Collège & lycée
-        </span>
-      </div>
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="hero-copy">
-          <span className="hero-tag">
-            <Sparkles size={15} /> TON DÉCLIC DU JOUR
-          </span>
-          <h2 id="hero-title">
-            Les grandes idées
-            <br />
-            commencent par
-            <br />
-            <span>un petit pas.</span>
-          </h2>
-          <p>
-            Une question, une notion à revoir, une envie de comprendre ? Fais le
-            premier pas avec Charlie.
-          </p>
-          <Link className="button button-white" to="/ma-seance">
-            C’est parti pour ma séance <ArrowRight size={18} />
-          </Link>
-          <span className="hero-note">
-            <Clock3 size={14} /> Un moment pour toi, à ton rythme
-          </span>
-        </div>
-        <div className="hero-art" aria-hidden="true">
-          <div className="orbit orbit-one" />
-          <div className="orbit orbit-two" />
-          <span className="art-symbol symbol-one">✦</span>
-          <span className="art-symbol symbol-two">+</span>
-          <div className="floating-note note-one">
-            💡 &nbsp; Et si tu essayais ?
-          </div>
-          <div className="mascot">
-            <div className="mascot-face">
-              <i />
-              <i />
-              <span />
-            </div>
-          </div>
-          <div className="mascot-shadow" />
-          <div className="floating-note note-two">
-            <span>✦</span> Tu peux y arriver.
-          </div>
-          <span className="art-dot" />
-        </div>
-      </section>
-      <section aria-label="Statistiques fictives" className="stats-grid">
-        {demoStats.map((stat, index) => {
-          const Icon = [Clock3, Target, Flame][index];
-          return (
-            <article className="card stat-card" key={stat.label}>
-              <span className={`icon-box ${stat.tone}`}>
-                <Icon size={21} />
+          <Link className="ref-charlie-message" to="/ma-seance">
+            <span className="ref-charlie-symbol">
+              <Sparkles size={23} />
+            </span>
+            <span>
+              <strong>Charlie</strong>
+              <span>
+                Prête pour une nouvelle journée ?<br />
+                Ton programme de démonstration
+                <br className="ref-desktop-break" /> t’attend. On commence ?
               </span>
-              <div>
-                <strong>{stat.value}</strong>
-                <p>{stat.label}</p>
-              </div>
-              <span className={`stat-change ${stat.tone}`}>{stat.change}</span>
-            </article>
-          );
-        })}
+            </span>
+            <span className="ref-round-arrow">
+              <ArrowRight size={21} />
+            </span>
+          </Link>
+        </div>
       </section>
-      <div className="dashboard-grid">
-        <section>
-          <div className="section-heading">
-            <h2>Un peu de chaque matière</h2>
+      <div className="ref-dashboard">
+        <section
+          className="ref-card ref-subjects"
+          aria-labelledby="ref-subjects-title"
+        >
+          <div className="ref-section-title">
+            <h2 id="ref-subjects-title">
+              <Sparkles className="ref-cyan" aria-hidden="true" />
+              Mes matières
+            </h2>
             <Link to="/mes-matieres">
-              Tout voir <ArrowRight size={16} />
+              Voir toutes
+              <ArrowRight size={15} />
             </Link>
           </div>
-          <div className="subjects">
-            {demoSubjects.map((subject) => (
+          <div className="ref-subject-grid">
+            {subjects.map((subject) => (
               <Link
-                to="/mes-matieres"
-                className="card subject-card"
-                key={subject.name}
+                key={subject.id}
+                to={subject.target}
+                className={`ref-subject ref-tone-${subject.tone}`}
+                aria-label={`Explorer ${subject.name}${["histoire", "anglais", "svt"].includes(subject.id) ? " dans le catalogue" : ""}`}
               >
-                <span className={`subject-symbol ${subject.tone}`}>
-                  {subject.symbol}
-                </span>
-                <div className="subject-content">
-                  <div className="subject-title">
-                    <h3>{subject.name}</h3>
-                    <ChevronRight size={17} />
-                  </div>
-                  <p>{subject.topic}</p>
-                  <div className="progress-label">
-                    <span>Parcours de démonstration</span>
-                    <strong>{subject.progress} %</strong>
-                  </div>
-                  <div
-                    className={`progress-track ${subject.tone}`}
-                    role="progressbar"
-                    aria-label={`Parcours fictif en ${subject.name}`}
-                    aria-valuenow={subject.progress}
-                    aria-valuemin={0}
-                    aria-valuemax={100}
-                  >
-                    <div style={{ width: `${subject.progress}%` }} />
-                  </div>
+                <HomeSymbol symbol={subject.symbol} tone={subject.tone} />
+                <h3>{subject.name}</h3>
+                <div
+                  className="ref-subject-progress"
+                  role="progressbar"
+                  aria-label={`Progression fictive en ${subject.name}`}
+                  aria-valuenow={subject.progress}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                >
+                  <i style={{ width: `${subject.progress}%` }} />
+                  <span>{subject.progress}%</span>
                 </div>
               </Link>
             ))}
           </div>
+          {subjects.length === 0 && (
+            <div className="ref-no-subjects">
+              <p>Aucune matière trouvée.</p>
+              <button onClick={() => setQuery("")}>
+                Réinitialiser la recherche
+              </button>
+            </div>
+          )}
         </section>
-        <section className="challenge card">
-          <span className="challenge-kicker">
-            <Zap size={16} /> LE DÉFI DE LA SEMAINE
-          </span>
-          <div className="trophy-art">
-            <Trophy size={44} strokeWidth={1.5} />
-            <span>✦</span>
+        <aside
+          className="ref-progress"
+          aria-label="Progression de démonstration"
+        >
+          <div className="ref-card ref-global">
+            <h2>Ma progression globale</h2>
+            <div className="ref-global-inner">
+              <div
+                className="ref-progress-ring"
+                role="img"
+                aria-label="Progression globale fictive : 62 pour cent"
+              >
+                <svg viewBox="0 0 110 110" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="home-ring" x1="0" x2="1" y1="1" y2="0">
+                      <stop stopColor="#00c8c6" />
+                      <stop offset="1" stopColor="#2698ff" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="55" cy="55" r="44" />
+                  <circle className="ref-ring-value" cx="55" cy="55" r="44" />
+                </svg>
+                <strong>
+                  62<small>%</small>
+                </strong>
+              </div>
+              <p>
+                <strong>Très bien !</strong>
+                <br />
+                Tu progresses
+                <br />
+                régulièrement.
+              </p>
+            </div>
           </div>
-          <h2>La curiosité, ça se cultive.</h2>
-          <p>Explore 3 matières différentes et élargis tes horizons.</p>
-          <div className="challenge-progress">
-            <span>Exemple fictif</span>
-            <strong>2 / 3 matières</strong>
+          <div className="ref-achievement">
+            <span className="ref-achievement-icon fire">
+              <Flame size={34} fill="currentColor" />
+            </span>
+            <p>
+              <strong>12</strong>
+              <span>jours consécutifs</span>
+            </p>
           </div>
-          <div className="challenge-steps">
-            <i />
-            <i />
-            <i />
+          <div className="ref-achievement">
+            <span className="ref-achievement-icon star">
+              <Star size={36} />
+            </span>
+            <p>
+              <strong>28</strong>
+              <span>badges obtenus</span>
+            </p>
           </div>
-          <Link to="/mes-defis">
-            Découvrir mes défis <ArrowUpRight size={18} />
+          <Link
+            className="ref-card ref-current-goal"
+            to="/ma-seance?matiere=maths"
+          >
+            <Target size={38} />
+            <span>
+              <strong>Mon objectif actuel</strong>
+              <span>
+                Améliorer mes résultats
+                <br />
+                en mathématiques
+              </span>
+            </span>
+            <ChevronRight size={19} />
           </Link>
+          <span className="ref-fictitious">
+            Indicateurs fictifs · aucune maîtrise évaluée
+          </span>
+        </aside>
+        <section
+          className="ref-card ref-priorities"
+          aria-labelledby="priorities-title"
+        >
+          <div className="ref-section-title">
+            <h2 id="priorities-title">
+              <CalendarDays className="ref-orange" aria-hidden="true" />
+              Mes priorités du jour
+            </h2>
+            <span className="ref-date">
+              <CalendarDays size={19} />
+              Exemple de journée
+            </span>
+          </div>
+          <div className="ref-priority-list">
+            {referencePriorities.map((priority) => (
+              <div
+                className={`ref-priority${completed.includes(priority.id) ? " checked" : ""}`}
+                key={priority.id}
+              >
+                <button
+                  className="ref-task-check"
+                  aria-label={`Marquer ${priority.title} comme ${completed.includes(priority.id) ? "à faire" : "terminé"} dans la démo`}
+                  aria-pressed={completed.includes(priority.id)}
+                  onClick={() =>
+                    setCompleted(
+                      completed.includes(priority.id)
+                        ? completed.filter((id) => id !== priority.id)
+                        : [...completed, priority.id],
+                    )
+                  }
+                >
+                  {completed.includes(priority.id) && <Check size={16} />}
+                </button>
+                <HomeSymbol symbol={priority.symbol} tone={priority.tone} />
+                <div>
+                  <h3>{priority.title}</h3>
+                  <p>{priority.description}</p>
+                </div>
+                <Link className="ref-pill-button" to={priority.target}>
+                  {priority.id === "anglais" ? "Explorer" : "Commencer"}
+                  <ArrowRight size={14} />
+                </Link>
+              </div>
+            ))}
+          </div>
         </section>
-      </div>
-      <div className="bottom-note">
-        <span>
-          <Sparkles size={20} />
-        </span>
-        <p>
-          <strong>Tu n’as pas besoin de tout savoir.</strong> Juste d’avoir
-          envie de comprendre.
+        <section
+          className="ref-card ref-challenges"
+          aria-labelledby="challenges-title"
+        >
+          <div className="ref-section-title">
+            <h2 id="challenges-title">
+              <Trophy className="ref-orange" aria-hidden="true" />
+              Les défis du jour
+            </h2>
+            <Link to="/mes-defis">
+              Voir tous
+              <ArrowRight size={15} />
+            </Link>
+          </div>
+          <div className="ref-challenge-list">
+            {referenceChallenges.map((challenge) => {
+              const Icon =
+                challenge.symbol === "target"
+                  ? Target
+                  : challenge.symbol === "brain"
+                    ? Brain
+                    : Leaf;
+              return (
+                <Link
+                  to="/mes-defis"
+                  key={challenge.title}
+                  className={`ref-day-challenge ref-${challenge.tone}`}
+                >
+                  <Icon size={36} aria-hidden="true" />
+                  <span>
+                    <h3>{challenge.title}</h3>
+                    <p>{challenge.description}</p>
+                  </span>
+                  <span
+                    className="ref-reward"
+                    aria-label={`${challenge.reward} points fictifs`}
+                  >
+                    +{challenge.reward}
+                    <Star size={14} fill="currentColor" />
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+        <div className="ref-bottom-grid">
+          <section className="ref-card ref-goals" aria-labelledby="goals-title">
+            <div className="ref-goals-heading">
+              <Target size={35} aria-hidden="true" />
+              <div>
+                <h2 id="goals-title">Parlons de tes objectifs</h2>
+                <p>
+                  Tu veux améliorer une matière, préparer un contrôle
+                  <br className="ref-desktop-break" /> ou simplement revoir un
+                  point ? Dis-moi ce dont tu as besoin !
+                </p>
+              </div>
+            </div>
+            <form
+              className="ref-goal-form"
+              onSubmit={(event) => {
+                event.preventDefault();
+                setNotice(
+                  "Démonstration : ton message n’est ni envoyé ni enregistré. Retrouve les exemples dans Ma séance.",
+                );
+                setMessage("");
+              }}
+            >
+              <label className="ref-sr-only" htmlFor="home-goal">
+                Ton objectif de démonstration
+              </label>
+              <input
+                id="home-goal"
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                placeholder="Écris ton message ici…"
+                maxLength={500}
+              />
+              <button
+                type="button"
+                aria-label="Pièce jointe indisponible dans cette démonstration"
+                onClick={() =>
+                  setNotice(
+                    "Les pièces jointes seront disponibles lors d’une prochaine étape.",
+                  )
+                }
+              >
+                <Paperclip size={20} />
+              </button>
+              <button
+                type="button"
+                aria-label="Microphone indisponible dans cette démonstration"
+                onClick={() =>
+                  setNotice(
+                    "La saisie vocale n’est pas activée dans cette démonstration.",
+                  )
+                }
+              >
+                <Mic size={21} />
+              </button>
+              <button
+                className="ref-round-arrow"
+                disabled={!message.trim()}
+                aria-label="Essayer l’envoi en démonstration"
+              >
+                <ArrowRight size={26} />
+              </button>
+            </form>
+            {notice && (
+              <p className="ref-goal-notice" role="status">
+                {notice}
+                <Link to="/ma-seance">
+                  Ma séance
+                  <ArrowRight size={14} />
+                </Link>
+              </p>
+            )}
+          </section>
+          <section
+            className="ref-card ref-concentration"
+            aria-labelledby="focus-title"
+          >
+            <Moon className="ref-moon" size={39} aria-hidden="true" />
+            <div>
+              <h2 id="focus-title">Mode Concentration</h2>
+              <p>
+                Un environnement calme pour te concentrer
+                <br className="ref-desktop-break" /> sur l’essentiel, sans
+                distractions.
+              </p>
+              <button
+                className="ref-focus-button"
+                aria-pressed={focus}
+                onClick={() => setFocus(!focus)}
+              >
+                {focus ? "Quitter le mode" : "Activer le mode"}
+                <ArrowRight size={19} />
+              </button>
+            </div>
+          </section>
+          <section
+            className="ref-card ref-avatar-teaser"
+            aria-labelledby="avatar-teaser-title"
+          >
+            <div>
+              <UserRound size={36} aria-hidden="true" />
+              <span>
+                <h2 id="avatar-teaser-title">Studio Avatar</h2>
+                <p>
+                  Personnalise ton compagnon Charlie :<br />
+                  apparence, voix et personnalité à venir.
+                </p>
+              </span>
+            </div>
+            <Link
+              to="/studio-avatar"
+              className="ref-avatar-gallery"
+              aria-label="Découvrir le Studio Avatar"
+            >
+              <span className="ref-portrait portrait-girl" />
+              <span className="ref-portrait portrait-robot" />
+              <span className="ref-portrait portrait-boy" />
+              <span className="ref-portrait portrait-cat" />
+              <ChevronRight size={19} />
+            </Link>
+          </section>
+        </div>
+        <p className="ref-demo-footnote">
+          <BookOpen size={13} aria-hidden="true" />
+          Démonstration — Nina, ses priorités, progressions et récompenses sont
+          fictives. Aucun message n’est envoyé.
         </p>
-        <Link to="/studio-avatar">
-          Découvre ton studio <ArrowRight size={16} />
-        </Link>
       </div>
-    </>
+    </HomeLayout>
   );
 }

@@ -6,7 +6,7 @@ for (const width of [360, 768, 1440]) {
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     for (const [path, title] of [
-      ["/", "Prêt à faire des étincelles ?"],
+      ["/", "Bonjour Nina !"],
       ["/ma-seance", "Ma séance"],
       ["/mes-matieres", "Mes matières"],
       ["/mes-progres", "Mes progrès"],
@@ -164,4 +164,77 @@ test("une route inconnue propose un retour à l’accueil", async ({ page }) => 
   ).toBeVisible();
   await page.getByRole("link", { name: "Revenir à l’accueil" }).click();
   await expect(page).toHaveURL("/");
+});
+
+test("accueil réaligné : recherche, notifications et concentration", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.locator(".ref-subject")).toHaveCount(6);
+  await page
+    .getByRole("button", { name: "Rechercher une matière", exact: true })
+    .click();
+  await page.getByLabel("Rechercher dans les matières").fill("FRANCAIS");
+  await expect(page.locator(".ref-subject")).toHaveCount(1);
+  await page.getByLabel("Rechercher dans les matières").fill("zzzzz");
+  await page
+    .getByRole("button", { name: "Réinitialiser la recherche" })
+    .click();
+  await expect(page.locator(".ref-subject")).toHaveCount(6);
+  await page.getByRole("button", { name: "Fermer le panneau" }).click();
+  await page
+    .getByRole("button", { name: "Voir les notifications de démonstration" })
+    .click();
+  await expect(
+    page.getByText("Trois défis fictifs à découvrir."),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Fermer le panneau" }).click();
+  await page
+    .getByRole("button", { name: "Activer le mode", exact: true })
+    .click();
+  await expect(page.locator(".ref-subjects")).toBeHidden();
+  await page
+    .getByRole("button", { name: "Quitter le mode", exact: true })
+    .click();
+  await expect(page.locator(".ref-subjects")).toBeVisible();
+  await page
+    .getByRole("link", { name: "Explorer Mathématiques", exact: true })
+    .click();
+  await expect(
+    page.getByRole("radio", { name: /Mathématiques/ }),
+  ).toBeChecked();
+});
+
+test("accueil réaligné : objectif local et priorités fictives", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page
+    .getByRole("button", {
+      name: "Marquer Mathématiques comme terminé dans la démo",
+    })
+    .click();
+  await expect(
+    page.getByRole("button", {
+      name: "Marquer Mathématiques comme à faire dans la démo",
+    }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await page
+    .getByLabel("Ton objectif de démonstration")
+    .fill("Comprendre une notion");
+  await page
+    .getByRole("button", { name: "Essayer l’envoi en démonstration" })
+    .click();
+  await expect(
+    page.getByRole("status").filter({ hasText: "ni envoyé ni enregistré" }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Ton objectif de démonstration")).toHaveValue(
+    "",
+  );
+  await page.reload();
+  await expect(
+    page.getByRole("button", {
+      name: "Marquer Mathématiques comme terminé dans la démo",
+    }),
+  ).toHaveAttribute("aria-pressed", "false");
 });

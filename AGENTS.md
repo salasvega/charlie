@@ -1,7 +1,7 @@
 # Conventions de développement — Charlie 2.0
 
 - Utiliser React, TypeScript strict, Vite, Tailwind CSS, Lucide React et React Router.
-- Travailler sur une branche dédiée. Les fusions dans `main` sont autorisées par le propriétaire depuis sa consigne d’autonomie : relire les changements et attendre les contrôles réussis avant chaque fusion.
+- Travailler sur une branche dédiée. Mission de réalignement UX/UI : ne pas fusionner automatiquement dans `main`. Corriger l’Accueil en premier et attendre la validation du propriétaire avant de modifier les autres écrans. Les maquettes officielles fournies sont la référence visuelle ; ne pas inventer de remplacement si elles sont absentes.
 - Garder les composants en PascalCase et les données et utilitaires en camelCase.
 - Placer les routes dans `src/app`, les layouts dans `src/layouts`, les pages dans `src/pages`, les composants partagés dans `src/components` et les données fictives dans `src/data`.
 - Centraliser les tokens et composants visuels réutilisables dans `src/styles/theme.css`. Les tokens `@theme` sont aussi accessibles comme utilitaires Tailwind.
