@@ -2,7 +2,7 @@
 
 ## Source et périmètre
 
-Référence reçue dans la conversation : image de l’Accueil Charlie 2.0, 1536 × 1024. Elle est désormais prioritaire sur les choix visuels antérieurs. La maquette Ma séance V2 a été reçue après validation de l’Accueil : sa comparaison est dans `MA_SEANCE_V2.md`. Les maquettes Studio Avatar, Mes progrès et Mes défis restent à recevoir.
+Référence reçue dans la conversation : image de l’Accueil Charlie 2.0, 1536 × 1024. Elle est désormais prioritaire sur les choix visuels antérieurs. La maquette Ma séance V2 a été reçue après validation de l’Accueil : sa comparaison est dans `MA_SEANCE_V2.md`. La maquette Studio Avatar a ensuite été reçue après validation de Ma séance V2 ; voir `STUDIO_AVATAR.md`. Les références Mes progrès et Mes défis restent à recevoir.
 
 Cette branche corrige uniquement l’Accueil et sa navigation. Les routes, parcours de séance, catalogue et autres écrans restent préservés. Aucun changement n’est fusionné automatiquement, ni propagé à la branche Netlify existante. Validation de l’Accueil requise avant de poursuivre.
 
@@ -66,3 +66,5 @@ Installation reproductible, TypeScript strict, build de production, tests de par
 ## Validation et étape suivante
 
 L’Accueil a été validé explicitement dans la conversation. Le travail se poursuit uniquement sur Ma séance V2, sur une branche distincte basée sur cette version de l’Accueil. La validation visuelle n’autorise pas de fusion automatique dans main.
+
+Ma séance V2 a été validée explicitement. La correction se poursuit uniquement sur le Studio Avatar, sur une branche dédiée, sans fusion des PR validées.

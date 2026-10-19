@@ -34,7 +34,7 @@ export function HomeLayout({
 }: {
   children: ReactNode;
   pageTitle?: string;
-  variant?: "home" | "session";
+  variant?: "home" | "session" | "avatar";
   focus: boolean;
   onToggleFocus: () => void;
 }) {
@@ -45,7 +45,7 @@ export function HomeLayout({
   }, [pageTitle]);
   return (
     <div
-      className={`reference-home${variant === "session" ? " reference-session" : ""}${focus ? " is-focus" : ""}`}
+      className={`reference-home${variant === "session" ? " reference-session" : variant === "avatar" ? " reference-avatar" : ""}${focus ? " is-focus" : ""}`}
     >
       <a className="skip-link" href="#home-main">
         Aller au contenu
@@ -93,7 +93,7 @@ export function HomeLayout({
         <div className="ref-sidebar-landscape">
           <Sparkles size={22} aria-hidden="true" />
           <strong>
-            {variant === "session" ? (
+            {variant !== "home" ? (
               <>
                 Les grandes
                 <br />
