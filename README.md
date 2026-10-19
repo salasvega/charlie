@@ -40,7 +40,7 @@ Le design system expose couleurs, typographie, ombres, espacements et rayons via
 
 ## Navigation
 
-`/`, `/ma-seance`, `/mes-matieres`, `/mes-progres`, `/mes-defis`, `/studio-avatar`. Les cinq dernières pages annoncent clairement les futures fonctionnalités. Les liens du tableau de bord mènent à ces pages ; ils ne démarrent pas de vraie séance. Les chemins inconnus affichent une page 404 applicative.
+`/`, `/ma-seance`, `/mes-matieres`, `/mes-progres`, `/mes-defis`, `/studio-avatar`. Les quatre dernières pages annoncent clairement les futures fonctionnalités. `/ma-seance` propose le parcours de démonstration décrit dans `docs/MISSION_02.md`. Les liens du tableau de bord mènent à ces pages ; ils ne démarrent pas de séance avec IA. Les chemins inconnus affichent une page 404 applicative.
 
 ## Netlify
 
@@ -51,3 +51,7 @@ Connecter le dépôt et choisir la branche à déployer, idéalement la PR pour 
 Les futurs services Supabase et IA pourront être isolés dans un dossier de services ajouté lors d’une mission dédiée, avec définition des permissions et stratégie de secrets. Ne jamais mettre de clé privée dans une variable `VITE_*`, exposée au navigateur.
 
 Conventions : voir `AGENTS.md`. Proposition de PR : `docs/PULL_REQUEST.md`.
+
+## Mission 02
+
+`src/pages/SessionPage.tsx` remplace la page provisoire de séance. Les exemples préparés sont dans `src/data/session.ts`. Choix matière → objectif → exemple avec indice → bilan fictif, sans sauvegarde ni évaluation. Voir `docs/MISSION_02.md` pour le périmètre et les critères d’acceptation.
