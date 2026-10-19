@@ -12,11 +12,11 @@ export function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/ma-seance" element={<SessionPage />} />
+      <Route path="/studio-avatar" element={<AvatarPage />} />
       <Route element={<AppLayout />}>
         <Route path="/mes-matieres" element={<SubjectsPage />} />
         <Route path="/mes-progres" element={<ProgressPage />} />
         <Route path="/mes-defis" element={<ChallengesPage />} />
-        <Route path="/studio-avatar" element={<AvatarPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
